@@ -1,0 +1,17 @@
+import requests
+
+def check_subdomain(domain, subdomains):
+    print(f"[*] Scanning for subdomains on: {domain}")
+    for sub in subdomains:
+        url = f"http://{sub}.{domain}"
+        try:
+            response = requests.get(url, timeout=3)
+            if response.status_code < 400:
+                print(f"[+] Found: {url}")
+        except requests.ConnectionError:
+            pass
+
+if __name__ == "__main__":
+    domain = input("Enter the domain (e.g., example.com): ")
+    wordlist = ["www", "mail", "blog", "dev", "test", "admin", "api"]
+    check_subdomain(domain, wordlist)
